@@ -1,0 +1,27 @@
+name: state_managment
+description: State Managment Mobx, Provider and My State
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  provider:
+  mobx:
+  flutter_mobx:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner:
+  mobx_codegen:
+
+
+flutter:
+  uses-material-design: true

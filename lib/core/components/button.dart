@@ -22,7 +22,7 @@ class GenericButton<T extends CounterBase> {
       case CounterMyState:
         return MyStateButtons(counter: counter);
       case CounterProvider:
-        return ProviderButtons();
+        return ProviderButtons(counter: counter);
     }
   }
 }
@@ -62,27 +62,32 @@ class MyStateButtons extends StatelessWidget {
 }
 
 class ProviderButtons extends StatelessWidget {
-  const ProviderButtons({super.key});
+  const ProviderButtons({super.key, required this.counter});
+  final CounterBase counter;
   @override
   Widget build(BuildContext context) {
-    return Consumer<CounterProvider>(
-      builder: (BuildContext context, CounterProvider value, Widget? child) {
-        print(value.count);
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(
-              onPressed: () => value.increment(),
-              child: Text(" + " + (value.count.toString())),
-            ),
-            Text(value.count.toString()),
-            ElevatedButton(
-              onPressed: () => value.decrement(),
-              child: Text(" - " + (value.count.toString())),
-            )
-          ],
-        );
-      },
+    // return Consumer<CounterProvider>(
+    //   builder: (BuildContext context, CounterProvider value, Widget? child) {
+    //   },
+    // );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+          onPressed: () =>
+              Provider.of<CounterProvider>(context, listen: false).increment(),
+          child:
+              Text(" + " + (context.watch<CounterProvider>().count.toString())),
+        ),
+        Text(context.watch<CounterProvider>().count.toString()),
+        ElevatedButton(
+          onPressed: () =>
+              Provider.of<CounterProvider>(context, listen: false).decrement(),
+          child:
+              Text(" - " + (context.watch<CounterProvider>().count.toString())),
+        )
+      ],
     );
   }
 }

@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:state_managment/product/home/home_page.dart';
 
+import 'core/constant/count.dart';
+import 'core/useState/mobx/mobx.dart';
 import 'core/useState/provider/provider.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => CounterProvider()),
+          ChangeNotifierProvider(create: (_) => Count.instance),
+          Provider<CounterMobx>.value(value: CounterMobx()),
         ],
         child: const MyApp(),
       ),

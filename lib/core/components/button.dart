@@ -6,6 +6,8 @@ import 'package:state_managment/core/useState/mobx/mobx.dart';
 import 'package:state_managment/core/useState/my/mystate.dart';
 import 'package:state_managment/core/useState/provider/provider.dart';
 
+import '../constant/count.dart';
+
 class GenericButton<T extends CounterBase> {
   final T counter;
 
@@ -16,9 +18,7 @@ class GenericButton<T extends CounterBase> {
   Widget? get button {
     switch (counter.runtimeType) {
       case CounterMobx:
-        return MobxButtons(
-          counter: counter,
-        );
+        return MobxButtons(counter: counter);
       case CounterMyState:
         return MyStateButtons(counter: counter);
       case CounterProvider:
@@ -45,9 +45,7 @@ class MyStateButtons extends StatelessWidget {
                         ? snapshot.data.toString()
                         : 0.toString())),
               ),
-              Text(snapshot.data != null
-                  ? snapshot.data.toString()
-                  : 0.toString()),
+              Text(context.watch<Count>().count.toString()),
               ElevatedButton(
                 onPressed: () => counter.decrement(),
                 child: Text(" - " +
@@ -77,15 +75,13 @@ class ProviderButtons extends StatelessWidget {
         ElevatedButton(
           onPressed: () =>
               Provider.of<CounterProvider>(context, listen: false).increment(),
-          child:
-              Text(" + " + (context.watch<CounterProvider>().count.toString())),
+          child: Text(" + " + (context.watch<Count>().count.toString())),
         ),
-        Text(context.watch<CounterProvider>().count.toString()),
+        Text(context.watch<Count>().count.toString()),
         ElevatedButton(
           onPressed: () =>
               Provider.of<CounterProvider>(context, listen: false).decrement(),
-          child:
-              Text(" - " + (context.watch<CounterProvider>().count.toString())),
+          child: Text(" - " + (context.watch<Count>().count.toString())),
         )
       ],
     );
@@ -106,9 +102,7 @@ class MobxButtons extends StatelessWidget {
             builder: (context) => Text(" + " + counter.count.toString()),
           ),
         ),
-        Observer(
-          builder: (context) => Text(counter.count.toString()),
-        ),
+        Text(context.watch<Count>().count.toString()),
         ElevatedButton(
           onPressed: () => counter.decrement(),
           child: Observer(

@@ -1,5 +1,7 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import '../../constant/count.dart';
 import '../../models/state/counter.dart';
 
 class CounterMyState implements CounterBase {
@@ -11,7 +13,7 @@ class CounterMyState implements CounterBase {
 
   CounterMyState._internal();
 
-  int _count = 0;
+  int _count = Count.instance.count;
   StreamController<int> myValue = StreamController<int>();
 
   @override
@@ -19,11 +21,15 @@ class CounterMyState implements CounterBase {
 
   @override
   void increment() {
-    myValue.add(_count++);
+    _count++;
+    Count.instance.increment();
+    myValue.add(_count);
   }
 
   @override
   void decrement() {
-    myValue.add(_count--);
+    _count--;
+    Count.instance.decrement();
+    myValue.add(_count);
   }
 }
